@@ -8,9 +8,9 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -80,9 +80,14 @@ public class DriveTrain extends SubsystemBase {
     field.setRobotPose(odometry.getPoseMeters());
   }
 
-  public void arcadeJoysticks(Joystick stick, double speed){
+  public void invertedArcadeJoysticks(XboxController stick, double speed){
 
-  m_drive.arcadeDrive(stick.getRawAxis(Constants.yID)*speed, stick.getRawAxis(Constants.xID)*speed);
+    m_drive.arcadeDrive(stick.getRawAxis(Constants.yID)*speed, stick.getRawAxis(Constants.xID)*speed);
+    }
+
+  public void arcadeJoysticks(XboxController stick, double speed){
+
+  m_drive.arcadeDrive(-stick.getRawAxis(Constants.yID)*speed, stick.getRawAxis(Constants.xID)*speed);
   }
 
   public void arcadeAutonomousMove(double moveSpeed, double turnSpeed, double speed){

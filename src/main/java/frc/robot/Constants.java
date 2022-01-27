@@ -32,7 +32,7 @@ public final class Constants {
     //porta do joystick
     public static int joytickID = 0;
     //ID do botão de inverção
-    public static int invertButtonID = 5;
+    public static int invertTriggerID = 3;
     //gyro ID
     public static int gyroID = 0;
 

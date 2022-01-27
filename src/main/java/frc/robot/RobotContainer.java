@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.InitialPosition;
 import frc.robot.subsystems.DriveTrain;
@@ -25,7 +24,7 @@ public class RobotContainer {
   private final DriveTrain driveTrain;
   private final driveWithJoysticks driveWithJoysticks;
   private final InitialPosition initialPosition;
-  public static Joystick stick;
+  public static XboxController stick;
 
   
 
@@ -36,7 +35,7 @@ public class RobotContainer {
     initialPosition = new InitialPosition(driveTrain);
     driveTrain.setDefaultCommand(driveWithJoysticks);    
 
-    stick = new Joystick(Constants.joytickID);
+    stick = new XboxController(Constants.joytickID);
   
 
     // Configure the button bindings

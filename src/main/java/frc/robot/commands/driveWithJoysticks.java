@@ -12,21 +12,12 @@ import frc.robot.subsystems.DriveTrain;
 public class driveWithJoysticks extends CommandBase {
   /** Creates a new driveWithJoysticks. */
   private final DriveTrain driveTrain;
-  private boolean invertButton;
+  private double invertTrigger;
 
   public driveWithJoysticks(DriveTrain dt) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrain = dt;
     addRequirements(dt);
-  }
-
-  public boolean isInvertButton() {
-    return invertButton;
-  }
-
-  public boolean setInvertButton(boolean invertButton) {
-    this.invertButton = invertButton;
-    return invertButton;
   }
 
   // Called when the command is initially scheduled.
@@ -38,16 +29,15 @@ public class driveWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    setInvertButton(RobotContainer.stick.getRawButtonPressed(Constants.invertButtonID));
-    if (setInvertButton(true)) {
-      driveTrain.rightMaster.setInverted(false);
-      driveTrain.leftMaster.setInverted(true);
+    invertTrigger = RobotContainer.stick.getRawAxis(Constants.invertTriggerID);
+  
+    if (invertTrigger == 1.0) {
+      driveTrain.invertedArcadeJoysticks(RobotContainer.stick,Constants.robot_speed);
 
     }else{ 
-      driveTrain.rightMaster.setInverted(true);
-      driveTrain.leftMaster.setInverted(false);
+      driveTrain.arcadeJoysticks(RobotContainer.stick, Constants.robot_speed);
     }
-    driveTrain.arcadeJoysticks(RobotContainer.stick, Constants.robot_speed);
+    
   }
 
   // Called once the command ends or is interrupted.
