@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -42,8 +41,10 @@ public class DriveTrain extends SubsystemBase {
   //diferential Drive
   DifferentialDrive m_drive;
   //speedcontrollers
-  SpeedController leftMotor;
-  SpeedController rightMotor;
+  //SpeedController leftMotor;
+  //SpeedController rightMotor;
+  // invertTrigger
+  public boolean invertButton;
 
     //driveTrain sim
     private DifferentialDrivetrainSim driveSim = DifferentialDrivetrainSim.createKitbotSim(
@@ -71,7 +72,6 @@ public class DriveTrain extends SubsystemBase {
     //Sim
     SmartDashboard.putData("Field", field);
     odometry = new DifferentialDriveOdometry(driveSim.getHeading());
-
   }
  @Override
   public void periodic() {
@@ -79,6 +79,8 @@ public class DriveTrain extends SubsystemBase {
     odometry.update(driveSim.getHeading(), driveSim.getLeftPositionMeters(), driveSim.getLeftPositionMeters());
     field.setRobotPose(odometry.getPoseMeters());
   }
+
+  
 
   public void invertedArcadeJoysticks(XboxController stick, double speed){
 
@@ -111,7 +113,7 @@ public class DriveTrain extends SubsystemBase {
     odometry.resetPosition(new Pose2d(), new Rotation2d());
     driveSim.setPose(odometry.getPoseMeters());
   }
-
+  
 
 }
 

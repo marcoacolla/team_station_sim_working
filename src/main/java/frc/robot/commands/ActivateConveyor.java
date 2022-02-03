@@ -5,33 +5,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.StorageSystem;
 
-public class driveWithJoysticks extends CommandBase {
-  /** Creates a new driveWithJoysticks. */
-  private final DriveTrain driveTrain;
-
-  public driveWithJoysticks(DriveTrain dt) {
+public class ActivateConveyor extends CommandBase {
+  private final StorageSystem storageSystem;
+  /** Creates a new activateConveyor. */
+  public ActivateConveyor(StorageSystem st) {
     // Use addRequirements() here to declare subsystem dependencies.
-    driveTrain = dt;
-    addRequirements(dt);
+    storageSystem = st;
+    addRequirements(st);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    storageSystem.activateStorage(1.0);
 
-      driveTrain.arcadeJoysticks(RobotContainer.controller, Constants.robot_speed);
-    
   }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

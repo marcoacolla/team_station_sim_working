@@ -9,11 +9,11 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-public class driveWithJoysticks extends CommandBase {
-  /** Creates a new driveWithJoysticks. */
+public class invertedDriveWithJoysticks extends CommandBase {
+  
   private final DriveTrain driveTrain;
-
-  public driveWithJoysticks(DriveTrain dt) {
+  /** Creates a new invertedDriveWithJoysticks. */
+  public invertedDriveWithJoysticks(DriveTrain dt) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrain = dt;
     addRequirements(dt);
@@ -21,17 +21,14 @@ public class driveWithJoysticks extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-      driveTrain.arcadeJoysticks(RobotContainer.controller, Constants.robot_speed);
-    
+    driveTrain.invertedArcadeJoysticks(RobotContainer.controller, Constants.robot_speed);
   }
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

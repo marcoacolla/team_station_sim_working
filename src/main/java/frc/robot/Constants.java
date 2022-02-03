@@ -35,5 +35,11 @@ public final class Constants {
     public static int invertTriggerID = 3;
     //gyro ID
     public static int gyroID = 0;
+    //storageMotor ID
+    public static int storageConvID = 0;
+    //conveyor trigger id
+    public static int conveyorTriggerID = 2;
+    //conveyor speed
+    public static double conveyorSpeed = 0.5;
 
 }

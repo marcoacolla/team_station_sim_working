@@ -6,11 +6,18 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.InitialPosition;
+import frc.robot.commands.ActivateConveyor;
+//import frc.robot.commands.InitialPosition;
+import frc.robot.commands.TurnRight;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.StorageSystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.driveWithJoysticks;
-
+import frc.robot.commands.invertedDriveWithJoysticks;
+//import frc.robot.commands.moveForward;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -22,24 +29,31 @@ public class RobotContainer {
 
   //declarando DriveTrain:
   private final DriveTrain driveTrain;
+  private final StorageSystem storageSystem;
   private final driveWithJoysticks driveWithJoysticks;
-  private final InitialPosition initialPosition;
-  public static XboxController stick;
+  //private final ActivateConveyor activateConveyor;
+  //private final InitialPosition initialPosition;
+  public static XboxController controller;
+  public static JoystickButton invertButton;
+  public static JoystickButton convTrigger;
 
   
-
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driveTrain = new DriveTrain();
+    storageSystem = new StorageSystem();
     driveWithJoysticks = new driveWithJoysticks(driveTrain);
-    initialPosition = new InitialPosition(driveTrain);
+    //activateConveyor = new ActivateConveyor(storageSystem);
+    //initialPosition = new InitialPosition(driveTrain);
     driveTrain.setDefaultCommand(driveWithJoysticks);    
-
-    stick = new XboxController(Constants.joytickID);
-  
+    controller = new XboxController(Constants.joytickID);
+    invertButton = new JoystickButton(controller, XboxController.Button.kA.value);
+    convTrigger =  new JoystickButton(controller, XboxController.Button.kStart.value);
 
     // Configure the button bindings
     configureButtonBindings();
+
   }
 
   /**
@@ -48,8 +62,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
-
+  private void configureButtonBindings() {
+    convTrigger.whenHeld(new ActivateConveyor(storageSystem));
+    invertButton.whenHeld(new invertedDriveWithJoysticks(driveTrain));
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -58,7 +74,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     driveTrain.reset();
-    return initialPosition;
+    return new SequentialCommandGroup(
+      new TurnRight(driveTrain, 60)
+    );
   
   }
   
