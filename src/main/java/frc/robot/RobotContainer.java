@@ -33,9 +33,9 @@ public class RobotContainer {
   private final driveWithJoysticks driveWithJoysticks;
   //private final ActivateConveyor activateConveyor;
   //private final InitialPosition initialPosition;
-  public static XboxController controller;
-  public static JoystickButton invertButton;
-  public static JoystickButton convTrigger;
+  private static XboxController controller;
+  private final JoystickButton invertButton;
+  private final JoystickButton convTrigger;
 
   
   
@@ -43,11 +43,11 @@ public class RobotContainer {
   public RobotContainer() {
     driveTrain = new DriveTrain();
     storageSystem = new StorageSystem();
-    driveWithJoysticks = new driveWithJoysticks(driveTrain);
+    controller = new XboxController(Constants.joytickID);
+    driveWithJoysticks = new driveWithJoysticks(driveTrain, controller);
     //activateConveyor = new ActivateConveyor(storageSystem);
     //initialPosition = new InitialPosition(driveTrain);
     driveTrain.setDefaultCommand(driveWithJoysticks);    
-    controller = new XboxController(Constants.joytickID);
     invertButton = new JoystickButton(controller, XboxController.Button.kA.value);
     convTrigger =  new JoystickButton(controller, XboxController.Button.kStart.value);
 
@@ -63,8 +63,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    convTrigger.whenHeld(new ActivateConveyor(storageSystem));
-    invertButton.whenHeld(new invertedDriveWithJoysticks(driveTrain));
+    convTrigger.whenHeld(new ActivateConveyor(storageSystem, 1.0));
+    invertButton.whenHeld(new invertedDriveWithJoysticks(driveTrain, controller));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

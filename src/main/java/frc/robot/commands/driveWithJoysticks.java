@@ -4,17 +4,19 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
+//import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
 public class driveWithJoysticks extends CommandBase {
   /** Creates a new driveWithJoysticks. */
   private final DriveTrain driveTrain;
-
-  public driveWithJoysticks(DriveTrain dt) {
+  private final XboxController controller;
+  public driveWithJoysticks(DriveTrain dt, XboxController controller) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.controller = controller;
     driveTrain = dt;
     addRequirements(dt);
   }
@@ -29,7 +31,7 @@ public class driveWithJoysticks extends CommandBase {
   @Override
   public void execute() {
 
-      driveTrain.arcadeJoysticks(RobotContainer.controller, Constants.robot_speed);
+      driveTrain.arcadeJoysticks(controller, Constants.robot_speed);
     
   }
   // Called once the command ends or is interrupted.

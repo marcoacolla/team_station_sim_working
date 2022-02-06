@@ -9,9 +9,11 @@ import frc.robot.subsystems.StorageSystem;
 
 public class ActivateConveyor extends CommandBase {
   private final StorageSystem storageSystem;
+  private double convSpeed;
   /** Creates a new activateConveyor. */
-  public ActivateConveyor(StorageSystem st) {
+  public ActivateConveyor(StorageSystem st, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
+    convSpeed = speed;
     storageSystem = st;
     addRequirements(st);
   }
@@ -23,13 +25,15 @@ public class ActivateConveyor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    storageSystem.activateStorage(1.0);
+    storageSystem.activateStorage(convSpeed);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    storageSystem.stopStorage();
+  }
 
   // Returns true when the command should end.
   @Override

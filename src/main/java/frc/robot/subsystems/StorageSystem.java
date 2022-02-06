@@ -10,7 +10,7 @@ import frc.robot.Constants;
 
 public class StorageSystem extends SubsystemBase {
   /** Creates a new Storage. */
-  public VictorSP storageConv;
+  private final VictorSP storageConv;
   public StorageSystem() {
     storageConv = new VictorSP(Constants.storageConvID);
   }
@@ -19,10 +19,12 @@ public class StorageSystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void activateStorage(double convSpeed){ 
-      storageConv.set(convSpeed);
+  public void activateStorage(double speed){ 
+      storageConv.set(speed);
    
   }
-    
+  public void stopStorage(){
+    storageConv.set(0.0);
+  }
   
 }
